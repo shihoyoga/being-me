@@ -156,7 +156,7 @@
         }
         
         .included-items li:before {
-            content: "✨";
+            content: "🌿";
             position: absolute;
             left: 0;
             top: 8px;
@@ -222,16 +222,22 @@
         <div class="content">
             <div class="question-group">
                 <div class="question-title">
-                    🕊️ プランを選択してください
+                    🌿 プランを選択してください
                 </div>
                 <div class="question-options">
                     <div class="option">
                         <input type="radio" id="self" name="plan" value="self">
-                        <label for="self">セルフプラン（49,800円）</label>
+                        <label for="self">
+                            <div style="font-weight: 600;">セルフプラン（49,800円）</div>
+                            <div style="font-size: 0.85rem; color: #8b7355; margin-top: 4px;">リピートの方向け</div>
+                        </label>
                     </div>
                     <div class="option">
                         <input type="radio" id="support" name="plan" value="support">
-                        <label for="support">サポートプラン（69,800円）★人気</label>
+                        <label for="support">
+                            <div style="font-weight: 600;">サポートプラン（69,800円）🌟人気</div>
+                            <div style="font-size: 0.85rem; color: #8b7355; margin-top: 4px;">初参加の方におすすめ - 約1万円分のドリンクと個別カウンセリング付き！</div>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -277,35 +283,33 @@
         const plans = {
             self: {
                 name: 'セルフプラン',
+                subtitle: 'リピートの方向け',
                 price: 49800,
                 taxIncluded: 54780,
                 badge: 'self-badge',
                 items: [
-                    'ZOOMレッスン＆お勉強会 約8時間',
-                    'Being me Journey Book（ヨガ哲学ガイド）',
-                    '14日間LINE無制限サポート',
-                    'ファスティングセミナー＆徹底解説動画 約3時間',
-                    '毎朝のFastingサポートLINE',
-                    'KALA酵素 1本（最高級ファスティングドリンク）'
+                    '最高級ファスティングドリンク「KALA酵素」付き',
+                    'ZOOMレッスン8時間 + Being me Journey Book',
+                    '4つのジャーナリングワークで普段蓋をしている「本当の想い」と向き合える',
+                    '14日間いつでもLINE質問OK',
+                    'Fasting期間中は毎朝のサポートメッセージお届け',
+                    '3時間のFasting徹底解説動画でしっかり学べる',
+                    'BOOKはデータでのお渡し（ご自身で印刷して使っていただけます）'
                 ]
             },
             support: {
                 name: 'サポートプラン',
+                subtitle: '初参加の方におすすめ - 約1万円分のドリンクと個別カウンセリング付き！',
                 price: 69800,
                 taxIncluded: 76780,
                 badge: 'support-badge',
                 items: [
-                    'ZOOMレッスン＆お勉強会 約8時間',
-                    'Being me Journey Book（ヨガ哲学ガイド）',
-                    '14日間LINE無制限サポート',
-                    'ファスティングセミナー＆徹底解説動画 約3時間',
-                    '毎朝のFastingサポートLINE',
-                    'KALA酵素 1本（最高級ファスティングドリンク）',
-                    'Being me パーソナルセッション（30分×2回）',
-                    'FASTING BOOK（冊子版お届け）',
-                    'ファスティング安心5点セット',
-                    'MANA酵素 1本（追加ドリンク）',
-                    '自分らしく生きるパーソナルプランシート'
+                    '🎁 追加MANA酵素（¥9,155相当付き）プレゼント！断食前後のサポートに◎',
+                    'セルフプランの全て +',
+                    'Being me パーソナルセッション（約30分×2回）- ファスティング前後の個別カウンセリングで、不安をワクワクに、迷いを確信に',
+                    '世界で一つだけのプラン「自分らしく生きるパーソナルプランシート」- あなたの悩み、体質、目標にカスタマイズしてお渡し！',
+                    'Being me Journey Book とFASTING BOOK を冊子でお届け - プログラム終了後も、人生の指針として いつでも見返せる！',
+                    'ファスティング安心5点セット付き'
                 ]
             }
         };
