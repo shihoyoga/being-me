@@ -248,6 +248,10 @@
                 </div>
                 <div class="question-options">
                     <div class="option">
+                        <input type="radio" id="general_first" name="status" value="general_first">
+                        <label for="general_first">🆕 一般の初参加（マイスター受講なし・資格なし）</label>
+                    </div>
+                    <div class="option">
                         <input type="radio" id="first_with_master" name="status" value="first_with_master">
                         <label for="first_with_master">初参加 & ファスティングマイスター受講予定</label>
                     </div>
@@ -315,6 +319,7 @@
         };
 
         const discounts = {
+            general_first: { discount: 0, name: '一般の初参加（通常価格）' },
             first_with_master: { discount: 20000, name: '初参加&マイスター受講割引' },
             master_first: { discount: 20000, name: 'マイスター初参加割引' },
             other_master_first: { discount: 10000, name: '他マイスター初参加割引' },
