@@ -84,18 +84,31 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            outline: none;
         }
         
         .option:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            border-color: #a0906b;
+            border-color: #d4c4b0;
+        }
+        
+        .option:focus-within {
+            border-color: white;
+            outline: 2px solid white;
+            outline-offset: 2px;
         }
         
         .option input[type="radio"] {
             width: 20px;
             height: 20px;
-            accent-color: #a0906b;
+            accent-color: #d4c4b0;
+            outline: none;
+        }
+        
+        .option input[type="radio"]:focus {
+            outline: 2px solid white;
+            outline-offset: 2px;
         }
         
         .option label {
@@ -149,17 +162,31 @@
         }
         
         .included-items li {
-            padding: 8px 0;
+            padding: 12px 0;
             padding-left: 25px;
             position: relative;
             border-bottom: 1px solid #f7fafc;
+            line-height: 1.6;
         }
         
         .included-items li:before {
             content: "🌿";
             position: absolute;
             left: 0;
-            top: 8px;
+            top: 12px;
+        }
+        
+        .included-items .main-item {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .included-items .sub-item {
+            font-weight: 400;
+            color: #8b7355;
+            font-size: 0.85rem;
+            margin-top: 4px;
         }
         
         .plan-badge {
@@ -187,6 +214,38 @@
             padding: 15px;
             margin-top: 20px;
             border-radius: 0 8px 8px 0;
+        }
+        
+        .payment-button {
+            background: #d4c4b0;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(212, 196, 176, 0.3);
+            outline: none;
+        }
+        
+        .payment-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 196, 176, 0.4);
+        }
+        
+        .payment-button:focus {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+        
+        .payment-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(212, 196, 176, 0.4);
         }
         
         @media (max-width: 768px) {
@@ -284,7 +343,34 @@
     </div>
 
     <script>
-     const plans = {
+        const paymentUrls = {
+            general_first: {
+                self: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL',
+                support: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL'
+            },
+            first_with_master: {
+                self: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL',
+                support: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL'
+            },
+            master_first: {
+                self: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL',
+                support: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL'
+            },
+            other_master_first: {
+                self: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL',
+                support: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL'
+            },
+            repeater: {
+                self: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL',
+                support: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL'
+            },
+            qualified_repeater: {
+                self: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL',
+                support: 'https://s.lmes.jp/landing-qr/2007280677-53wGBALX?uLand=Cs43NL'
+            }
+        };
+
+        const plans = {
             self: {
                 name: 'セルフプラン',
                 subtitle: 'リピートの方向け',
@@ -391,9 +477,8 @@
                     <small style="color: #666;">※税込 ${taxIncludedPrice.toLocaleString()}円 + ドリンク代</small><br>
                     <div class="special-note">
                         <strong>⚠️ 特別価格適用</strong><br>
-                        資格をお持ちのリピーター様限定の特別価格です
-                    </div>
-                    <strong>⚠️ ドリンクは別途購入して下さい</strong><br>
+                        資格をお持ちのリピーター様限定の特別価格です<br>
+                        <strong>⚠️ ドリンクは別途購入して下さい</strong><br>
                         マイスター専用SHOPから購入してね🐰
                     </div>
                 `;
@@ -423,11 +508,33 @@
             
             document.getElementById('priceBreakdown').innerHTML = breakdown;
             
-            const itemsHtml = plan.items.map(item => `<li>${item}</li>`).join('');
+            const itemsHtml = plan.items.map(item => {
+                if (typeof item === 'string') {
+                    return `<li><div class="main-item">${item}</div></li>`;
+                } else {
+                    return `<li>
+                        <div class="main-item">${item.main}</div>
+                        ${item.sub ? `<div class="sub-item">${item.sub}</div>` : ''}
+                    </li>`;
+                }
+            }).join('');
+            
             document.getElementById('includedItems').innerHTML = `
                 <h3>${plan.name} に含まれるもの</h3>
                 <ul>${itemsHtml}</ul>
             `;
+            
+            // 支払いボタンを追加
+            const paymentUrl = paymentUrls[statusType][planType];
+            if (paymentUrl) {
+                document.getElementById('includedItems').innerHTML += `
+                    <div style="text-align: center; margin-top: 30px;">
+                        <a href="${paymentUrl}" target="_blank" class="payment-button">
+                            📝 ここから申込む
+                        </a>
+                    </div>
+                `;
+            }
             
             document.getElementById('result').style.display = 'block';
             document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
